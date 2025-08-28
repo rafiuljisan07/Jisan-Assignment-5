@@ -7,15 +7,16 @@ document.getElementById('card-container').addEventListener('click', function (ev
     }
 })
 
-// call operation setup 
+// in-card buttons clicking setup
 document.getElementById('card-container').addEventListener('click', function (event) {
+
+    // call operation setup 
     if (event.target.classList.contains('callBtn')) {
-
-
         const remainCoin = document.getElementById('coin').innerText;
+
         // insufficient alert
         if (remainCoin < 20) {
-            alert('Insufficient Coin');
+            alert('❌ Insufficient coins. A call requires at least 20 coins.');
             return
         }
         // decreasing coin
@@ -24,9 +25,8 @@ document.getElementById('card-container').addEventListener('click', function (ev
         // calling alert
         const nearestCard = event.target.closest('.card');
         const name = nearestCard.querySelector('.div .name').innerText;
-        console.log(name)
         const num = nearestCard.querySelector('.div .num').innerText;
-        alert("Calling " + name + ": " + num)
+        alert("📞 Calling " + name + ": " + num)
 
         // creating a new div
         const historyDiv = document.createElement('div');
@@ -42,7 +42,22 @@ document.getElementById('card-container').addEventListener('click', function (ev
 
         // appending the new div to the parent div   
         document.getElementById('history').appendChild(historyDiv);
-
-
     }
+
+    // copy button click setup
+    if (event.target.classList.contains('copy')) {
+        const copyCount = parseInt(document.getElementById('copy-count').innerText);
+        const newCopyCount = copyCount + 1;
+        document.getElementById('copy-count').innerText = newCopyCount;
+        const nearestCard = event.target.closest('.card');
+        const num = nearestCard.querySelector('.div .num').innerText;
+        alert('The number has been copied: ' + num)
+        navigator.clipboard.writeText(num);
+    }
+})
+
+// clear button click setup
+document.getElementById('clearBtn').addEventListener('click', function () {
+    document.getElementById('history').innerText = '';
+    document.getElementById('coin').innerText = 100;
 })
